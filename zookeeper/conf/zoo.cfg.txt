@@ -1,0 +1,40 @@
+# The length of a single tick, which is the basic time
+# unit used by ZooKeeper, as measured in milliseconds.
+# It is used to regulate heartbeats, and timeouts. For
+# example, the minimum session timeout will be two ticks.
+tickTime=2000
+
+# The number of ticks that the initial
+# synchronization phase can take.
+initLimit=10
+
+# The number of ticks that can pass between
+# sending a request and getting an acknowledgement
+syncLimit=5
+
+# The location where ZooKeeper will store the
+# in-memory database snapshots and, unless specified
+# otherwise, the transaction log of updates to the database.
+dataDir=/zookeeper/data
+
+# This option will direct the machine to write the transaction
+# log to the dataLogDir rather than the dataDir. This allows
+# a dedicated log device to be used and helps avoid
+# competition between logging and snaphots.
+dataLogDir=/zookeeper/log
+
+# The port at which the clients will connect
+clientPort=2181
+
+# The number of snapshots to retain in dataDir
+autopurge.snapRetainCount=10000
+
+# Purge task interval in hours
+# Set to "0" to disable auto purge feature
+autopurge.purgeInterval=12
+
+# List of servers in the ZooKeeper cluster in the format:
+# "server.X=hostname:nnnn:mmmm"
+# where X is the id of the server, nnnn is the quorum
+# election port and mmmm is the leader election port.
+server.1=zookeeper1:2888:3888
