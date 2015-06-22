@@ -1,24 +1,10 @@
 FROM ubuntu:14.04
 MAINTAINER Luis Medina <lu4nm3@gmail.com>
 
-# Set logging location.
-ENV ZOO_LOG_DIR=/var/log/zookeeper \
-	ZOO_LOG4J_PROP='INFO,ROLLINGFILE'
-
-# Add sudo_nopass group and make it sudoable without using a password.
-#RUN groupadd sudo_nopass && \
-#	grep -q "%sudo_nopass ALL=(ALL) NOPASSWD: ALL" /etc/sudoers || echo "\n%sudo_nopass ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-
 # Create zookeeper group and user.
-RUN groupadd zookeeper && \
-	useradd -g zookeeper -s /bin/bash -m zookeeper && \
-	grep -q "zookeeper ALL=NOPASSWD: ALL" /etc/sudoers || echo "\nzookeeper ALL=NOPASSWD: ALL" >> /etc/sudoers
-	#usermod -a -G sudo_nopass zookeeper
-
-# Increase open file limit.
-RUN grep -q "fs.file-max = 65536" /etc/sysctl.conf || echo "\nfs.file-max = 65536" >> /etc/sysctl.conf && \
-	grep -q "zookeeper - nofile 65536" /etc/security/limits.conf || echo "\nzookeeper - nofile 65536" >> /etc/security/limits.conf && \
-	grep -q "session required pam_limits.so" /etc/pam.d/common-session || echo "\nsession required pam_limits.so" >> /etc/pam.d/common-session
+RUN adduser --disabled-password --shell /bin/bash zookeeper && \
+	grep -q "%sudo ALL=(ALL) NOPASSWD:ALL" /etc/sudoers || echo "\n%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+	adduser zookeeper sudo
 
 # Create necessary directories.
 RUN	mkdir -p /zookeeper/data && \
@@ -34,22 +20,19 @@ RUN	chown -R zookeeper:zookeeper /zookeeper && \
 # Install Java
 RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
 	apt-get update && \
-	apt-get install -y software-properties-common && \	
+	apt-get install -y software-properties-common && \
 	add-apt-repository -y ppa:webupd8team/java && \
 	apt-get update && \
-	apt-get install -y oracle-java7-installer && \	
+	apt-get install -y oracle-java7-installer && \
 	rm -rf /var/lib/apt/lists/* && \
   	rm -rf /var/cache/oracle-jdk7-installer
 
 # Swith to ZooKeeper user.
-#USER zookeeper
+USER zookeeper
 
 # Set logging location.
-#ENV ZOO_LOG_DIR=/var/log/zookeeper \
-#	ZOO_LOG4J_PROP='INFO,ROLLINGFILE'
-
-# Expose ports.
-EXPOSE 2181 2888 3888
+ENV ZOO_LOG_DIR=/var/log/zookeeper \
+	ZOO_LOG4J_PROP='INFO,ROLLINGFILE'
 
 # Download ZooKeeper.
 RUN	sudo apt-get install -y wget && \
