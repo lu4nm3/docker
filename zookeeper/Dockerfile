@@ -3,8 +3,8 @@ MAINTAINER Luis Medina <lu4nm3@gmail.com>
 
 # Create zookeeper group and user.
 RUN adduser --disabled-password --shell /bin/bash zookeeper && \
-	grep -q "%sudo ALL=(ALL) NOPASSWD:ALL" /etc/sudoers || echo "\n%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
-	adduser zookeeper sudo
+	adduser zookeeper sudo && \
+	grep -q "%sudo ALL=(ALL) NOPASSWD:ALL" /etc/sudoers || echo "\n%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Create necessary directories.
 RUN	mkdir -p /zookeeper/data && \
