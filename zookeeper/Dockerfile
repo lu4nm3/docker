@@ -1,6 +1,9 @@
 FROM ubuntu:14.04
 MAINTAINER Luis Medina <lu4nm3@gmail.com>
 
+# Expose ports.
+EXPOSE 2181 2888 3888
+
 # Create zookeeper group and user.
 RUN adduser --disabled-password --gecos '' --shell /bin/bash zookeeper && \
 	adduser zookeeper sudo && \
@@ -17,7 +20,7 @@ RUN	chown -R zookeeper:zookeeper /zookeeper && \
 	chown -R zookeeper:zookeeper /opt/zookeeper && \
 	chown -R zookeeper:zookeeper /var/log/zookeeper
 
-# Install Java
+# Install Java.
 RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
 	apt-get update && \
 	apt-get install -y software-properties-common && \
@@ -51,5 +54,5 @@ RUN	sudo apt-get install -y wget && \
 #COPY conf/java.env /opt/zookeeper/3.4.6/conf/
 #RUN sudo chown zookeeper:zookeeper /opt/zookeeper/3.4.6/conf/java.env
 
-# Start ZooKeeper
+# Start ZooKeeper.
 ENTRYPOINT ["/bin/bash", "/opt/zookeeper/3.4.6/bin/zkServer.sh", "start-foreground"]

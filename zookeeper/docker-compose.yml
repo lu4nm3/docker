@@ -4,10 +4,6 @@
 
 zookeeper1:
   build: .
-  expose:
-    - 2181
-    - 2888
-    - 3888
   hostname: zookeeper1
   name: zoo1
   restart: always
