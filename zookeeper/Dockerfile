@@ -1,9 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER Luis Medina <lu4nm3@gmail.com>
 
-# Expose ports.
-EXPOSE 2181 2888 3888
-
 # Create zookeeper group and user.
 RUN adduser --disabled-password --gecos '' --shell /bin/bash zookeeper && \
     adduser zookeeper sudo && \
@@ -38,6 +35,9 @@ RUN chown -R zookeeper:zookeeper /zookeeper && \
 
 # Swith to ZooKeeper user.
 USER zookeeper
+
+# Expose ports.
+EXPOSE 2181 2888 3888
 
 # Start ZooKeeper.
 ENTRYPOINT ["/bin/bash", "/opt/zookeeper/3.4.6/bin/zkServer.sh", "start-foreground"]
