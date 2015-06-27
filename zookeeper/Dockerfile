@@ -33,7 +33,7 @@ RUN chown -R zookeeper:zookeeper /zookeeper && \
     chown -R zookeeper:zookeeper /opt/zookeeper && \
     chown -R zookeeper:zookeeper /var/log/zookeeper
 
-# Swith to ZooKeeper user.
+# Switch to ZooKeeper user.
 USER zookeeper
 
 # Expose ports.
