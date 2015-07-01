@@ -2,12 +2,13 @@
 # -v /home/lmedina/stuff/docker/zookeeper/conf:/opt/zookeeper/3.4.6/conf -v /home/lmedina/stuff/docker/zookeeper/files/myid1:/zookeeper/data/myid
 # --ulimit nofile=65536:65536 --name zoo -it zookeeper_zookeeper1
 
-zookeeper1:
-  build: .
-  hostname: zookeeper1
-  name: zoo1
+zookeeper:
+  image: lu4nm3/zookeeper:latest
+  hostname: zookeeper
+  name: zookeeper
   restart: always
   volumes:
-    - ./logs:/var/log/zookeeper
+    - /var/log/zookeeper:/var/log/zookeeper
     - ./conf:/opt/zookeeper/3.4.6/conf
-    - ./files/myid1:/zookeeper/data/myid
+    - /zookeeper/data:/zookeeper/data
+    - /zookeeper/log:/zookeeper/log
