@@ -23,7 +23,7 @@ RUN apt-get install -y wget && \
     tar -xvzf zookeeper-3.4.6.tar.gz && \
     cp -nr zookeeper-3.4.6/* /opt/zookeeper/3.4.6/
 
-# Cleanup
+# Clean up unnecessary files.
 RUN rm -rf *
 
 # Expose ports.
