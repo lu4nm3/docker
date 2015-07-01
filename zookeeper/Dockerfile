@@ -19,12 +19,12 @@ RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true 
 
 # Download ZooKeeper.
 RUN apt-get install -y wget && \
-    wget http://www.us.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz && \
-    tar -xvzf zookeeper-3.4.6.tar.gz && \
-    cp -nr zookeeper-3.4.6/* /opt/zookeeper/3.4.6/
+    wget http://www.us.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz -P /root && \
+    tar -xvzf /root/zookeeper-3.4.6.tar.gz -C /root && \
+    cp -nr /root/zookeeper-3.4.6/* /opt/zookeeper/3.4.6/
 
 # Clean up unnecessary files.
-RUN rm -rf *
+RUN rm -rf /root/*
 
 # Expose ports.
 EXPOSE 2181 2888 3888
