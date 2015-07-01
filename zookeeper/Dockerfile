@@ -35,7 +35,7 @@ RUN chown -R zookeeper:zookeeper /zookeeper && \
 
 # Clean up unnecessary files.
 RUN rm -rf /home/zookeeper/* && \
-    rm -rf /temp/*
+    rm -rf /tmp/zookeeper-3.4.6.tar.gz
 
 # Expose ports.
 EXPOSE 2181 2888 3888
