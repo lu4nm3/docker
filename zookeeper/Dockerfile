@@ -37,7 +37,7 @@ RUN chown -R zookeeper:zookeeper /zookeeper && \
 RUN rm -rf /home/zookeeper/* && \
     rm -rf /tmp/zookeeper-3.4.6.tar.gz
 
-# Expose ports.
+# Expose ZooKeeper ports.
 EXPOSE 2181 2888 3888
 
 # Start ZooKeeper.
