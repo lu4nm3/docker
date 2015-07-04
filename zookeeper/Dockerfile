@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 MAINTAINER Luis Medina <lu4nm3@gmail.com>
 
 # Create zookeeper user and group.
-RUN adduser --disabled-password --gecos '' --group --shell /bin/bash --system zookeeper && \
+RUN adduser --disabled-password --gecos '' --group --shell /bin/bash --system --uid 333 zookeeper && \
     adduser zookeeper sudo && \
     grep -q "%sudo ALL=(ALL) NOPASSWD:ALL" /etc/sudoers || echo "\n%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
@@ -35,8 +35,14 @@ RUN chown -R zookeeper:zookeeper /zookeeper && \
     chown -R zookeeper:zookeeper /opt/zookeeper && \
     chown -R zookeeper:zookeeper /var/log/zookeeper
 
+# Switch to zookeeper user.
+USER zookeeper
+
 # Expose ZooKeeper ports.
 EXPOSE 2181 2888 3888
+
+# Create mount points for the necessary ZooKeeper directories.
+VOLUME ["/var/log/zookeeper", "/opt/zookeeper/3.4.6/conf", "/zookeeper/data", "/zookeeper/log"]
 
 # Start ZooKeeper.
 ENTRYPOINT ["/bin/bash", "/opt/zookeeper/3.4.6/bin/zkServer.sh", "start-foreground"]
