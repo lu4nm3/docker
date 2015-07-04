@@ -24,11 +24,10 @@ RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true 
 
 # Download and install ZooKeeper.
 RUN apt-get install -y wget && \
-    wget http://www.us.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz -P /tmp && \
+    wget http://www.us.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz -P /home/zookeeper && \
     tar -xvzf /tmp/zookeeper-3.4.6.tar.gz -C /home/zookeeper && \
     cp -nr /home/zookeeper/zookeeper-3.4.6/* /opt/zookeeper/3.4.6/ && \
-    rm -rf /home/zookeeper/* && \
-    rm -rf /tmp/*
+    rm -rf /home/zookeeper/*
 
 # Change ownership to zookeeper user and group.
 RUN chown -R zookeeper:zookeeper /zookeeper && \
