@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER Luis Medina <lu4nm3@gmail.com>
+MAINTAINER Luis Medina <luis@escala.io>
 
 # Create zookeeper user and group.
 RUN adduser --disabled-password --gecos '' --group --shell /bin/bash --system --uid 333 zookeeper && \
