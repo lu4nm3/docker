@@ -13,4 +13,6 @@ RUN \
 
 # Expose root volume for adding credentials and etcd-aws-cluster script.
 VOLUME ["/root"]
+
+# Run the script.
 ENTRYPOINT ["/root/etcd-aws-cluster"]
