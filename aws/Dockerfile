@@ -1,4 +1,5 @@
 FROM gliderlabs/alpine
+MAINTAINER Luis Medina <luis@escala.io>
 
 RUN \
     # Install necessary packages.
