@@ -7,7 +7,7 @@ ENV NODE_VERSION 6.2.0-r0
 USER root
 
 RUN \
-    apk add --no-cache bash && \
+    apk add --no-cache bash git && \
 
     # Install NodeJS
     apk add --no-cache nodejs=$NODE_VERSION
