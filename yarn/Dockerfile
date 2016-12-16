@@ -2,20 +2,23 @@ FROM alpine:3.4
 
 MAINTAINER "Luis Medina <luis@escala.io>"
 
-ENV PATH $PATH:$HOME/.yarn/bin
+ENV YARN_HOME /usr/share/yarn
 
 USER root
 
 RUN \
     # Install dependencies
-    apk add --no-cache bash curl gnupg nodejs tar && \
+    apk add --no-cache --virtual .build-dependencies ca-certificates tar wget && \
+    apk add --no-cache bash nodejs && \
 
-    # Create bash profile to include yarn in PATH
-    touch ~/.bash_profile && \
+    # Download Yarn
+    wget https://yarnpkg.com/latest.tar.gz -P /tmp && \
 
     # Install Yarn
-    curl -o- -L https://yarnpkg.com/install.sh | bash && \
+    tar zxf /tmp/latest.tar.gz dist -C $YARN_HOME --strip-components=1 && \
 
-    apk del curl gnupg tar
+    # Cleanup
+    apk del .build-dependencies && \
+    rm -rf /tmp/*
 
 ENTRYPOINT ["/bin/bash"]
